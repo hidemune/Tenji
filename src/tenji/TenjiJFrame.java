@@ -4,6 +4,12 @@
  */
 package tenji;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+
 /**
  *
  * @author HDM
@@ -52,6 +58,9 @@ private char cKey4 = 'l';
 private char cKey5 = 'k';
 private char cKey6 = 'j';
 
+private char cKeyBS = 'a';
+private char cKeyYomi = 'l';
+
 
     /**
      * Creates new form TenjiJFrame
@@ -65,8 +74,42 @@ private char cKey6 = 'j';
         tableKey.setValueAt(" " + cKey5 + " ", 1, 1);
         tableKey.setValueAt(" " + cKey6 + " ", 2, 1);
         
+        //使用方法
+        StringBuilder sb = new StringBuilder();
+        sb.append("点字入力画面です。\n");
+        sb.append("人差し指をFとJに置いて入力します。\n");
+        sb.append("改行はスペースキー、1文字削除するにはAを押します。\n");
+        sb.append("Lを押すと、全文を読み上げます。\n");
+        
+        writeFile(sb.toString(), "UTF-8", textOutFile.getText());
+        
     }
 
+    public static void writeFile(String str, String enc, String filename) {
+        //CSVの書き込み
+        try {
+            File csv = new File(filename); // CSVデータファイル
+            //古いファイルのバックアップ
+    //        if (csv.exists()) {
+    //            File fileB = new File(csv.getAbsolutePath() + "~");
+    //            if (fileB.exists()) {
+    //                fileB.delete();
+    //            }
+    //            csv.renameTo(fileB);
+    //        }
+            // 常に新規作成
+            PrintWriter bw;
+            bw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csv),enc)));
+
+            //データ部
+            bw.println(str);
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,6 +125,7 @@ private char cKey6 = 'j';
         textHonbun = new javax.swing.JTextArea();
         textInput = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        textOutFile = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,6 +174,8 @@ private char cKey6 = 'j';
 
         jLabel1.setText("スペースまたはエンターで改行");
 
+        textOutFile.setText("~/openjtalk_infile.txt");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,8 +185,9 @@ private char cKey6 = 'j';
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textInput, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(0, 181, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(textOutFile, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 105, Short.MAX_VALUE))
             .addComponent(jScrollPane2)
         );
         layout.setVerticalGroup(
@@ -150,7 +197,9 @@ private char cKey6 = 'j';
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(textInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textOutFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
@@ -233,6 +282,22 @@ private char cKey6 = 'j';
             //確定
             //String moji = getMoji(bit);
             textHonbun.setText(textHonbun.getText() + "\n");
+            bit = 0;
+            bitR = 0;
+        }
+        if (c == cKeyBS) {
+            //1文字削除
+            //String moji = getMoji(bit);
+            String str = textHonbun.getText();
+            textHonbun.setText(str.substring(0, str.length() - 1));
+            bit = 0;
+            bitR = 0;
+        }
+        if (c == cKeyYomi) {
+            //全文読み上げ
+            //String moji = getMoji(bit);
+            String yomi = textHonbun.getText();
+            writeFile(yomi, "UTF-8", textOutFile.getText());
             bit = 0;
             bitR = 0;
         }
@@ -389,6 +454,14 @@ private char cKey6 = 'j';
                 break;
         }
         
+        String yomi = ret;
+        if (yomi.equals("ー")) {
+            yomi = "長音記号";
+        }
+        if (yomi.equals("っ")) {
+            yomi = "小さい つ";
+        }
+        writeFile(yomi, "UTF-8", textOutFile.getText());
         return ret;
     }
     /**
@@ -432,5 +505,6 @@ private char cKey6 = 'j';
     private javax.swing.JTable tableKey;
     private javax.swing.JTextArea textHonbun;
     private javax.swing.JTextField textInput;
+    private javax.swing.JTextField textOutFile;
     // End of variables declaration//GEN-END:variables
 }

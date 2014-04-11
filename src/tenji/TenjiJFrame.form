@@ -29,8 +29,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="textInput" min="-2" pref="124" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="textOutFile" alignment="0" min="-2" pref="214" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="181" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="105" max="32767" attributes="0"/>
           </Group>
           <Component id="jScrollPane2" max="32767" attributes="0"/>
       </Group>
@@ -43,6 +44,8 @@
                       <Component id="textInput" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="textOutFile" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" min="-2" pref="74" max="-2" attributes="0"/>
               </Group>
@@ -107,6 +110,11 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x30b9;&#x30da;&#x30fc;&#x30b9;&#x307e;&#x305f;&#x306f;&#x30a8;&#x30f3;&#x30bf;&#x30fc;&#x3067;&#x6539;&#x884c;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="textOutFile">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="~/openjtalk_infile.txt"/>
       </Properties>
     </Component>
   </SubComponents>
