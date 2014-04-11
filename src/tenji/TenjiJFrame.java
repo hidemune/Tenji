@@ -32,6 +32,7 @@ private char cKey5 = 'j';
 private char cKey6 = 'n';
 */
 
+/*
 //HHKB Lite2 
 private char cKey1 = 'q';
 private char cKey2 = 'a';
@@ -39,6 +40,17 @@ private char cKey3 = 'z';
 private char cKey4 = '[';
 private char cKey5 = ':';
 private char cKey6 = '/';
+*/
+
+//これが正攻法らしい
+//確かにちゃんと動く
+//HHKB Lite2 
+private char cKey1 = 's';
+private char cKey2 = 'd';
+private char cKey3 = 'f';
+private char cKey4 = 'l';
+private char cKey5 = 'k';
+private char cKey6 = 'j';
 
 
     /**
@@ -46,6 +58,13 @@ private char cKey6 = '/';
      */
     public TenjiJFrame() {
         initComponents();
+        tableKey.setValueAt(" " + cKey1 + " ", 0, 0);
+        tableKey.setValueAt(" " + cKey2 + " ", 1, 0);
+        tableKey.setValueAt(" " + cKey3 + " ", 2, 0);
+        tableKey.setValueAt(" " + cKey4 + " ", 0, 1);
+        tableKey.setValueAt(" " + cKey5 + " ", 1, 1);
+        tableKey.setValueAt(" " + cKey6 + " ", 2, 1);
+        
     }
 
     /**
