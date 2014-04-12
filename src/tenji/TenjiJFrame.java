@@ -59,7 +59,7 @@ private char cKey5 = 'k';
 private char cKey6 = 'j';
 
 private char cKeyBS = 'a';
-private char cKeyYomi = 'l';
+private char cKeyYomi = ';';
 
 
     /**
@@ -76,27 +76,33 @@ private char cKeyYomi = 'l';
         
         //使用方法
         StringBuilder sb = new StringBuilder();
-        sb.append("点字入力画面です。\n");
-        sb.append("人差し指をFとJに置いて入力します。\n");
-        sb.append("改行はスペースキー、1文字削除するにはAを押します。\n");
-        sb.append("Lを押すと、全文を読み上げます。\n");
+        sb.append("点字入力画面です。");
+        sb.append("人差し指をエフとジェイに置いて入力します。");
+        sb.append("改行はスペースキー、1文字削除するには左手小指を押します。");
+        sb.append("右手小指を押すと、全文を読み上げます。");
         
         writeFile(sb.toString(), "UTF-8", textOutFile.getText());
         
     }
 
     public static void writeFile(String str, String enc, String filename) {
+        if (str.equals("")) {
+            return;
+        }
+        
         //CSVの書き込み
         try {
             File csv = new File(filename); // CSVデータファイル
             //古いファイルのバックアップ
-    //        if (csv.exists()) {
+            if (csv.exists()) {
     //            File fileB = new File(csv.getAbsolutePath() + "~");
     //            if (fileB.exists()) {
     //                fileB.delete();
     //            }
     //            csv.renameTo(fileB);
-    //        }
+                //削除
+                csv.delete();
+            }
             // 常に新規作成
             PrintWriter bw;
             bw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csv),enc)));
@@ -174,7 +180,7 @@ private char cKeyYomi = 'l';
 
         jLabel1.setText("スペースまたはエンターで改行");
 
-        textOutFile.setText("~/openjtalk_infile.txt");
+        textOutFile.setText("./openjtalk_infile.txt");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -459,7 +465,7 @@ private char cKeyYomi = 'l';
             yomi = "長音記号";
         }
         if (yomi.equals("っ")) {
-            yomi = "小さい つ";
+            yomi = "小さいつ";
         }
         writeFile(yomi, "UTF-8", textOutFile.getText());
         return ret;
