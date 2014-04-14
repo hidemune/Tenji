@@ -48,6 +48,7 @@ private char cKey5 = ':';
 private char cKey6 = '/';
 */
 
+/*
 //これが正攻法らしい
 //確かにちゃんと動く
 //HHKB Lite2 
@@ -60,7 +61,19 @@ private char cKey6 = 'j';
 
 private char cKeyBS = 'a';
 private char cKeyYomi = ';';
+*/
 
+//使い辛いので右手だけで入力するよう変更。
+//３点ずつ入力していくものとする。
+private char cKey1 = 'l';
+private char cKey2 = 'k';
+private char cKey3 = 'j';
+private char cKey4 = '.';
+private char cKey5 = ',';
+private char cKey6 = 'm';
+
+private char cKeyBS = 'h';
+private char cKeyYomi = ' ';
 
     /**
      * Creates new form TenjiJFrame
@@ -134,6 +147,7 @@ private char cKeyYomi = ';';
         textOutFile = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("点字入力");
 
         tableKey.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -142,7 +156,7 @@ private char cKeyYomi = ';';
                 {" Z", " /"}
             },
             new String [] {
-                "左手", "右手"
+                "1回め", "2回め"
             }
         ) {
             Class[] types = new Class [] {
@@ -178,7 +192,7 @@ private char cKeyYomi = ';';
             }
         });
 
-        jLabel1.setText("スペースまたはエンターで改行");
+        jLabel1.setText("スペースで１文字確定。同時押し不要。");
 
         textOutFile.setText("./openjtalk_infile.txt");
 
@@ -245,7 +259,9 @@ private char cKeyYomi = ';';
     }//GEN-LAST:event_textInputKeyPressed
 
     private void textInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textInputKeyReleased
+        
         char c = evt.getKeyChar();
+        /*
         if (c == cKey1) {
             bitR = bitR | 1;
             tableKey.setValueAt(" " + c + " ", 0, 0);
@@ -270,6 +286,7 @@ private char cKeyYomi = ';';
             bitR = bitR | 32;
             tableKey.setValueAt(" " + c + " ", 2, 1);
         }
+        
         if ((bit == bitR)) {
             //確定
             String moji = getMoji(bit);
@@ -277,20 +294,29 @@ private char cKeyYomi = ';';
             bit = 0;
             bitR = 0;
         }
+        */
         if (c == '\n') {
             //確定
             //String moji = getMoji(bit);
             textHonbun.setText(textHonbun.getText() + "\n");
             bit = 0;
             bitR = 0;
+            tableKey.setValueAt(" " + cKey1 + " ", 0, 0);
+            tableKey.setValueAt(" " + cKey2 + " ", 1, 0);
+            tableKey.setValueAt(" " + cKey3 + " ", 2, 0);
+            tableKey.setValueAt(" " + cKey4 + " ", 0, 1);
+            tableKey.setValueAt(" " + cKey5 + " ", 1, 1);
+            tableKey.setValueAt(" " + cKey6 + " ", 2, 1);
         }
+        
         if (c == ' ') {
             //確定
-            //String moji = getMoji(bit);
-            textHonbun.setText(textHonbun.getText() + "\n");
+            String moji = getMoji(bit);
+            textHonbun.setText(textHonbun.getText() + moji);
             bit = 0;
             bitR = 0;
         }
+        
         if (c == cKeyBS) {
             //1文字削除
             //String moji = getMoji(bit);
