@@ -315,6 +315,12 @@ private char cKeyYomi = ' ';
             textHonbun.setText(textHonbun.getText() + moji);
             bit = 0;
             bitR = 0;
+            tableKey.setValueAt(" " + cKey1 + " ", 0, 0);
+            tableKey.setValueAt(" " + cKey2 + " ", 1, 0);
+            tableKey.setValueAt(" " + cKey3 + " ", 2, 0);
+            tableKey.setValueAt(" " + cKey4 + " ", 0, 1);
+            tableKey.setValueAt(" " + cKey5 + " ", 1, 1);
+            tableKey.setValueAt(" " + cKey6 + " ", 2, 1);
         }
         
         if (c == cKeyBS) {
@@ -324,6 +330,12 @@ private char cKeyYomi = ' ';
             textHonbun.setText(str.substring(0, str.length() - 1));
             bit = 0;
             bitR = 0;
+            tableKey.setValueAt(" " + cKey1 + " ", 0, 0);
+            tableKey.setValueAt(" " + cKey2 + " ", 1, 0);
+            tableKey.setValueAt(" " + cKey3 + " ", 2, 0);
+            tableKey.setValueAt(" " + cKey4 + " ", 0, 1);
+            tableKey.setValueAt(" " + cKey5 + " ", 1, 1);
+            tableKey.setValueAt(" " + cKey6 + " ", 2, 1);
         }
         if (c == cKeyYomi) {
             //全文読み上げ
@@ -332,6 +344,12 @@ private char cKeyYomi = ' ';
             writeFile(yomi, "UTF-8", textOutFile.getText());
             bit = 0;
             bitR = 0;
+            tableKey.setValueAt(" " + cKey1 + " ", 0, 0);
+            tableKey.setValueAt(" " + cKey2 + " ", 1, 0);
+            tableKey.setValueAt(" " + cKey3 + " ", 2, 0);
+            tableKey.setValueAt(" " + cKey4 + " ", 0, 1);
+            tableKey.setValueAt(" " + cKey5 + " ", 1, 1);
+            tableKey.setValueAt(" " + cKey6 + " ", 2, 1);
         }
     }//GEN-LAST:event_textInputKeyReleased
     
