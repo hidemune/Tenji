@@ -4,6 +4,7 @@
  */
 package tenji;
 
+import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -73,26 +74,31 @@ private char cKey5 = ',';
 private char cKey6 = 'm';
 
 private char cKeyBS = 'h';
-private char cKeyYomi = ' ';
+private char cKeyYomi = KeyEvent.VK_ESCAPE;
 
-    /**
-     * Creates new form TenjiJFrame
-     */
-    public TenjiJFrame() {
-        initComponents();
+    private void TenjiListClear() {
         tableKey.setValueAt(" " + cKey1 + " ", 0, 0);
         tableKey.setValueAt(" " + cKey2 + " ", 1, 0);
         tableKey.setValueAt(" " + cKey3 + " ", 2, 0);
         tableKey.setValueAt(" " + cKey4 + " ", 0, 1);
         tableKey.setValueAt(" " + cKey5 + " ", 1, 1);
         tableKey.setValueAt(" " + cKey6 + " ", 2, 1);
-        
+    }
+    /**
+     * Creates new form TenjiJFrame
+     */
+    public TenjiJFrame() {
+        initComponents();
+        TenjiListClear();
+        enableInputMethods(false);      //IME止める
         //使用方法
         StringBuilder sb = new StringBuilder();
         sb.append("点字入力画面です。");
-        sb.append("人差し指をエフとジェイに置いて入力します。");
-        sb.append("改行はスペースキー、1文字削除するには左手小指を押します。");
-        sb.append("右手小指を押すと、全文を読み上げます。");
+        sb.append("１段目は、人差し指を右手ホームポジションのジェイに置いて入力します。");
+        sb.append("２段目は、人差し指を右手ホームポジションの右下のエムに置いて入力します。");
+        
+        sb.append("１文字確定はスペースキー、1文字削除するにはジェイの左隣のエイチを押します。");
+        sb.append("エスケープを押すと、全文を読み上げます。");
         
         writeFile(sb.toString(), "UTF-8", textOutFile.getText());
         
@@ -148,6 +154,7 @@ private char cKeyYomi = ' ';
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("点字入力");
+        setFocusable(false);
 
         tableKey.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -156,7 +163,7 @@ private char cKeyYomi = ' ';
                 {" Z", " /"}
             },
             new String [] {
-                "1回め", "2回め"
+                "1段目", "2段目"
             }
         ) {
             Class[] types = new Class [] {
@@ -178,6 +185,7 @@ private char cKeyYomi = ' ';
         tableKey.setFocusable(false);
         jScrollPane1.setViewportView(tableKey);
 
+        textHonbun.setEditable(false);
         textHonbun.setColumns(20);
         textHonbun.setLineWrap(true);
         textHonbun.setRows(5);
@@ -195,19 +203,20 @@ private char cKeyYomi = ' ';
         jLabel1.setText("スペースで１文字確定。同時押し不要。");
 
         textOutFile.setText("./openjtalk_infile.txt");
+        textOutFile.setFocusable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textInput, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(textOutFile, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 105, Short.MAX_VALUE))
+                .addGap(0, 91, Short.MAX_VALUE))
             .addComponent(jScrollPane2)
         );
         layout.setVerticalGroup(
@@ -222,7 +231,7 @@ private char cKeyYomi = ' ';
                         .addComponent(textOutFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE))
         );
 
         pack();
@@ -261,52 +270,13 @@ private char cKeyYomi = ' ';
     private void textInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textInputKeyReleased
         
         char c = evt.getKeyChar();
-        /*
-        if (c == cKey1) {
-            bitR = bitR | 1;
-            tableKey.setValueAt(" " + c + " ", 0, 0);
-        }
-        if (c == cKey2) {
-            bitR = bitR | 2;
-            tableKey.setValueAt(" " + c + " ", 1, 0);
-        }
-        if (c == cKey3) {
-            bitR = bitR | 4;
-            tableKey.setValueAt(" " + c + " ", 2, 0);
-        }
-        if (c == cKey4) {
-            bitR = bitR | 8;
-            tableKey.setValueAt(" " + c + " ", 0, 1);
-        }
-        if (c == cKey5) {
-            bitR = bitR | 16;
-            tableKey.setValueAt(" " + c + " ", 1, 1);
-        }
-        if (c == cKey6) {
-            bitR = bitR | 32;
-            tableKey.setValueAt(" " + c + " ", 2, 1);
-        }
-        
-        if ((bit == bitR)) {
-            //確定
-            String moji = getMoji(bit);
-            textHonbun.setText(textHonbun.getText() + moji);
-            bit = 0;
-            bitR = 0;
-        }
-        */
         if (c == '\n') {
             //確定
             //String moji = getMoji(bit);
             textHonbun.setText(textHonbun.getText() + "\n");
             bit = 0;
             bitR = 0;
-            tableKey.setValueAt(" " + cKey1 + " ", 0, 0);
-            tableKey.setValueAt(" " + cKey2 + " ", 1, 0);
-            tableKey.setValueAt(" " + cKey3 + " ", 2, 0);
-            tableKey.setValueAt(" " + cKey4 + " ", 0, 1);
-            tableKey.setValueAt(" " + cKey5 + " ", 1, 1);
-            tableKey.setValueAt(" " + cKey6 + " ", 2, 1);
+            TenjiListClear();
         }
         
         if (c == ' ') {
@@ -315,12 +285,7 @@ private char cKeyYomi = ' ';
             textHonbun.setText(textHonbun.getText() + moji);
             bit = 0;
             bitR = 0;
-            tableKey.setValueAt(" " + cKey1 + " ", 0, 0);
-            tableKey.setValueAt(" " + cKey2 + " ", 1, 0);
-            tableKey.setValueAt(" " + cKey3 + " ", 2, 0);
-            tableKey.setValueAt(" " + cKey4 + " ", 0, 1);
-            tableKey.setValueAt(" " + cKey5 + " ", 1, 1);
-            tableKey.setValueAt(" " + cKey6 + " ", 2, 1);
+            TenjiListClear();
         }
         
         if (c == cKeyBS) {
@@ -330,12 +295,7 @@ private char cKeyYomi = ' ';
             textHonbun.setText(str.substring(0, str.length() - 1));
             bit = 0;
             bitR = 0;
-            tableKey.setValueAt(" " + cKey1 + " ", 0, 0);
-            tableKey.setValueAt(" " + cKey2 + " ", 1, 0);
-            tableKey.setValueAt(" " + cKey3 + " ", 2, 0);
-            tableKey.setValueAt(" " + cKey4 + " ", 0, 1);
-            tableKey.setValueAt(" " + cKey5 + " ", 1, 1);
-            tableKey.setValueAt(" " + cKey6 + " ", 2, 1);
+            TenjiListClear();
         }
         if (c == cKeyYomi) {
             //全文読み上げ
@@ -344,12 +304,7 @@ private char cKeyYomi = ' ';
             writeFile(yomi, "UTF-8", textOutFile.getText());
             bit = 0;
             bitR = 0;
-            tableKey.setValueAt(" " + cKey1 + " ", 0, 0);
-            tableKey.setValueAt(" " + cKey2 + " ", 1, 0);
-            tableKey.setValueAt(" " + cKey3 + " ", 2, 0);
-            tableKey.setValueAt(" " + cKey4 + " ", 0, 1);
-            tableKey.setValueAt(" " + cKey5 + " ", 1, 1);
-            tableKey.setValueAt(" " + cKey6 + " ", 2, 1);
+            TenjiListClear();
         }
     }//GEN-LAST:event_textInputKeyReleased
     
